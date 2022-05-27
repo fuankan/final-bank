@@ -8,18 +8,18 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import kg.fkapps.finalbank.models.UserData
 
-class UserDB(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
+class UserDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "UserDatabase"
-        private val TABLE_NAME = "UserTable"
-        private val KEY_ID = "id"
-        private val KEY_NAME = "name"
-        private val KEY_EMAIL = "email"
-        private val AMOUNT = "amount"
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "UserDatabase"
+        private const val TABLE_NAME = "UserTable"
+        private const val KEY_ID = "id"
+        private const val KEY_NAME = "name"
+        private const val KEY_EMAIL = "email"
+        private const val AMOUNT = "amount"
     }
+
     override fun onCreate(db: SQLiteDatabase?) {
-        //creating table with fields
         val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + TABLE_NAME + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + AMOUNT + " INTEGER," + KEY_NAME + " TEXT,"
                 + KEY_EMAIL + " TEXT" + ")")
@@ -31,21 +31,18 @@ class UserDB(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,null,DATA
         onCreate(db)
     }
 
-    //method to insert data
-    fun insertUsers(name: String, email: String, amount: Int):Long{
+    fun insertUsers(name: String, email: String, amount: Int): Long {
 
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_NAME, name)
         contentValues.put(KEY_EMAIL, email)
         contentValues.put(AMOUNT, amount)
-        // Inserting Row
         val success = db.insert(TABLE_NAME, null, contentValues)
-        db.close() // Closing database connection
+        db.close()
         return success
     }
 
-    //method to read data
     fun viewAllUsers(): Cursor {
 
         val selectQuery = "SELECT * FROM $TABLE_NAME"
@@ -64,12 +61,10 @@ class UserDB(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,null,DATA
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $KEY_ID = $id"
         val cursor: Cursor = db.rawQuery(selectQuery, null)
 
-        var user: UserData = UserData(0, "", "", 0)
+        var user = UserData(0, "", "", 0)
 
-        if (cursor != null)
-        {
-            if(cursor.moveToFirst())
-            {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 user.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 user.name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
                 user.email = cursor.getString(cursor.getColumnIndex(KEY_EMAIL))

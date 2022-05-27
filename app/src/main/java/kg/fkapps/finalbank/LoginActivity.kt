@@ -15,16 +15,16 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val usernameBlank: String = "admin"
-        val passwordBlank: String = "admin123"
+        val usernameBlank = "admin"
+        val passwordBlank = "admin123"
 
         val username: TextInputEditText = findViewById(R.id.username)
         val password: TextInputEditText = findViewById(R.id.password)
         val login: Button = findViewById(R.id.log_in_button)
 
         login.setOnClickListener {
-            if (!username.text.toString().isEmpty()) {
-                if (!password.text.toString().isEmpty()) {
+            if (username.text.toString().isNotEmpty()) {
+                if (password.text.toString().isNotEmpty()) {
                     if (username.text.toString().equals(usernameBlank) && password.text.toString()
                             .equals(passwordBlank)
                     ) {

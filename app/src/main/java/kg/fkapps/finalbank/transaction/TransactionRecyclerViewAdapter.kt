@@ -10,8 +10,6 @@ import kg.fkapps.finalbank.models.TransactionData
 
 class TransactionRecyclerViewAdapter(private val transactionList: ArrayList<TransactionData>) :
     RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionItem>() {
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItem {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.single_transaction_layout, parent, false)
@@ -31,12 +29,12 @@ class TransactionRecyclerViewAdapter(private val transactionList: ArrayList<Tran
             val from = itemView.findViewById(R.id.from) as TextView
             val to = itemView.findViewById(R.id.to) as TextView
             val amount = itemView.findViewById(R.id.amount) as TextView
-            val date_time = itemView.findViewById(R.id.date_time) as TextView
+            val dateTime = itemView.findViewById(R.id.date_time) as TextView
 
             from.text = "From: " + item.from.toString()
             to.text = "To: " + item.to.toString()
             amount.text = "Amount: $" + item.amount.toString()
-            date_time.text = item.data_time
+            dateTime.text = item.data_time
         }
     }
 }

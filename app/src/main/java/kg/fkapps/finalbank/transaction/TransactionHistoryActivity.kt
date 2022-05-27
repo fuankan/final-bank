@@ -25,10 +25,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.title = "Transaction History"
 
-        //getting recyclerview from xml
         val recyclerView = findViewById<RecyclerView>(R.id.transaction_list)
-
-        //adding a layoutmanager
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         val items: ArrayList<TransactionData> = ArrayList()
@@ -79,10 +76,7 @@ class TransactionHistoryActivity : AppCompatActivity() {
 
         items.reverse()
 
-        //creating our adapter
         val adapter = TransactionRecyclerViewAdapter(items)
-
-        //now adding the adapter to recyclerview
         recyclerView.adapter = adapter
     }
 

@@ -2,9 +2,10 @@ package kg.fkapps.finalbank
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import kg.fkapps.finalbank.allUsers.AllUsersActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -15,15 +16,12 @@ class SplashActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("CheckLogin", Context.MODE_PRIVATE)
         val check = prefs.getString("Check", "No")
 
-        Handler().postDelayed(
+        Handler(Looper.getMainLooper()).postDelayed(
             {
-                if(check.equals("Yes"))
-                {
+                if (check.equals("Yes")) {
                     val intent = Intent(this@SplashActivity, AllUsersActivity::class.java)
                     startActivity(intent)
-                }
-                else
-                {
+                } else {
                     val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(intent)
                 }

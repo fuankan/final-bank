@@ -20,9 +20,9 @@ import java.util.*
 
 class SelectUsersActivity : AppCompatActivity() {
 
-    var users: ArrayList<UserData> = ArrayList()
-    var fromUser = arrayOf<Int>(-1, 0)
-    var toUser = arrayOf<Int>(-1, 0)
+    private var users: ArrayList<UserData> = ArrayList()
+    private var fromUser = arrayOf(-1, 0)
+    private var toUser = arrayOf(-1, 0)
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,19 +32,20 @@ class SelectUsersActivity : AppCompatActivity() {
         fromUser[0] = intent.getIntExtra("id", 0)
         fromUser[1] = intent.getIntExtra("amount", 0)
 
-        val toolbar: Toolbar = findViewById<Toolbar>(R.id.app_bar_layout)
+        val toolbar: Toolbar = findViewById(R.id.app_bar_layout)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.title = "Select User"
 
-        //getting recyclerview from xml
         val recyclerView = findViewById<RecyclerView>(R.id.user_list)
 
-        //adding a layoutmanager
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(
+            this, RecyclerView.VERTICAL,
+            false
+        )
 
-        val db: UserDB = UserDB(applicationContext)
+        val db = UserDB(applicationContext)
 
         val cursor: Cursor = db.viewAllUsers()
 
@@ -71,19 +72,17 @@ class SelectUsersActivity : AppCompatActivity() {
             }
         }
 
-        //creating our adapter
         val adapter =
             UserSelectRecyclerViewAdapter(
                 users,
                 toUser
             )
 
-        //now adding the adapter to recyclerview
         recyclerView.adapter = adapter
 
-        val amountInput: EditText = findViewById(R.id.enter_amount) as EditText
+        val amountInput: EditText = findViewById(R.id.enter_amount)
 
-        val confirmBtn: Button = findViewById(R.id.confirm_btn) as Button
+        val confirmBtn: Button = findViewById(R.id.confirm_btn)
 
         confirmBtn.setOnClickListener {
             if (amountInput.text.toString().isNotEmpty()) {
@@ -93,7 +92,7 @@ class SelectUsersActivity : AppCompatActivity() {
                         showPopup(transferAmount, db)
                     } else {
                         Toast.makeText(
-                            applicationContext, "Amount is exceeded from the user account!",
+                            applicationContext, "Amount is exceeded from the user's balance",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -105,7 +104,7 @@ class SelectUsersActivity : AppCompatActivity() {
                     ).show()
                 }
             } else {
-                Toast.makeText(applicationContext, "Please enter amount!", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "Please enter amount", Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -116,11 +115,11 @@ class SelectUsersActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to transfer money?")
 
-        builder.setPositiveButton("No") { dialog, which ->
+        builder.setPositiveButton("No") { dialog, _ ->
             dialog.dismiss()
         }
 
-        builder.setNegativeButton("Yes") { dialog, which ->
+        builder.setNegativeButton("Yes") { dialog, _ ->
 
             fromUser[1] = fromUser[1] - amount
             toUser[1] = toUser[1] + amount
@@ -132,7 +131,7 @@ class SelectUsersActivity : AppCompatActivity() {
                     val date = getCurrentDateTime()
                     val dateInString = date.toString("MMM dd, yyyy hh:mm a")
 
-                    val dbTrans: TransactionHistoryDB = TransactionHistoryDB((applicationContext))
+                    val dbTrans = TransactionHistoryDB((applicationContext))
 
                     val check3: Long =
                         dbTrans.insertTransaction(fromUser[0], toUser[0], amount, dateInString)
@@ -150,7 +149,8 @@ class SelectUsersActivity : AppCompatActivity() {
                         .show()
                 }
             } else {
-                Toast.makeText(applicationContext, "Transaction failed!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Transaction failed!", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             dialog.dismiss()
@@ -159,12 +159,12 @@ class SelectUsersActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+    private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
     }
 
-    fun getCurrentDateTime(): Date {
+    private fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
 
