@@ -40,6 +40,7 @@ class AllUsersActivity : AppCompatActivity() {
             db.insertUsers("Atabek", "atabek@gmail.com", 10000)
             db.insertUsers("Aian", "aian.d@gmail.com", 5000)
             db.insertUsers("Kalyibek", "kkalyibek@gmail.com", 30100)
+            db.insertUsers("Aruuke", "tokaru@gmail.com", 4500000)
             db.insertUsers("Tilek", "zholdoshbek.t@gmail.com", 4500)
             db.insertUsers("Baisal", "baisal@gmail.com", 1200)
             db.insertUsers("Oleg", "oleg@gmail.com", 1700)

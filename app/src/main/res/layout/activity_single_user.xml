@@ -29,17 +29,17 @@
         android:layout_marginRight="20dp"/>
 
     <TextView
+        android:id="@+id/account_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/account_no_text"
-        android:id="@+id/account_no"
-        android:text="xxxxxxxxxxxxx"
-        android:textSize="16sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/simple_border"
         android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:text="someNumber"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="match_parent"
